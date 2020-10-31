@@ -1,0 +1,26 @@
+#+TITLE: Design
+
+Client server - shove as much logic into client as possible
+
+* Client
+** MVP:
+- Start process
+- Find process
+  + PID
+  + Log file
+- List running processes
+** Later:
+- restart semantics
+* Server
+** MVP:
+- Runs as daemon
+- puts process stdout and stderr into logs
+- Query about running process
+  + PID
+  + Log file location
+- Will start processes
+** Later:
+- Can send signals to children
+- state monitoring
+- Better logs
+- hook on stdin
