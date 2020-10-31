@@ -1,3 +1,3 @@
-# Changelog for lucy
+# Changelog for beelzebub
 
 ## Unreleased changes
