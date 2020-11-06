@@ -8,7 +8,8 @@ import Control.Concurrent (threadDelay)
 import System.Posix.Files (setFileCreationMask)
 import System.Directory (setCurrentDirectory)
 import System.IO as IO
-import qualified Network.Socket.FsSocket as FsSocket
+import qualified Beelzebub.Daemon as Daemon
+import qualified Beelzebub.FsSocket as FsSocket
 import qualified Data.ByteString.Char8 as C
 import Network.Socket.ByteString (recv, sendAll)
 
@@ -49,21 +50,6 @@ parent pid = do
 runLs :: IO ()
 runLs = do
   P.runProcess "ls" >>= print
-
--- In general, call System.Posix.Process.forkProcess createDaemon
-createDaemon :: IO () -> IO ()
-createDaemon program = do
-  -- Make sure we can read and write to accessed files
-  setFileCreationMask $ CMode 0
-  -- Set CWD to root, which is guaranteed to exist
-  setCurrentDirectory "/"
-  -- Make sure we outlive the parent process
-  _pgid <- createSession
-  -- Close standard file descriptors, as we don't need them and they're a bit of
-  -- a security hazard (?)
-  traverse IO.hClose [IO.stdin, IO.stdout, IO.stderr]
-  -- Run the given program
-  program
 
 -- Socket notes
 --  Network.Socket.maxListenQueue :: Int - the value of SOMAXCONN

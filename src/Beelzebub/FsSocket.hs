@@ -1,6 +1,6 @@
 -- | 
 
-module Network.Socket.FsSocket (pathFromString, runTcpServer, runTcpClient, FsSocketPath(..)) where
+module Beelzebub.FsSocket (pathFromString, runTcpServer, runTcpClient, FsSocketPath) where
 
 import qualified Network.Socket as Sock
 import Network.Socket (SockAddr(..), SocketType, AddrInfo, Socket)
@@ -28,11 +28,6 @@ pathFromString str
           & map (<256)
           & foldl' (&&) True
 
--- Goal: Path -> stream socket
--- Stream - Sock.Stream
-
--- openSocket :: AddrInfo -> IO Socket
--- socket :: Family -> SocketType -> ProtocolNomuber -> IO SOCKET
 sockForPath :: IO Socket
 sockForPath = Sock.socket Sock.AF_UNIX Sock.Stream Sock.defaultProtocol
 
